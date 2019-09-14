@@ -1,0 +1,7 @@
+venv
+instance/envvar.py
+.vscode
+__pycache__
+*.pyc
+.env
+logs/

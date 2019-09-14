@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Cart -->
+<div class="container">
+    <!-- Cart item -->
+
+    <table class="table table-bordered">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Rental Days</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in cartData %}
+            <tr>
+                <th scope="row">{{row[2]}}</th>
+                <td>$1</td>
+                <td>{{row[3]}}</td>
+                <td>${{row[3]}}</td>
+                <td><a href="/removeFromCart?productId={{row[1]}}" />Remove Product</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <div class="row">
+        <div class="col-md-3">
+            Shipping & handling :$ 0.00
+            <br>
+            Taxes(6% on grand total): {{tax}}
+            <br>
+            Grand Total: $ {{totalsum}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            {% if totalsum > 0.00 %}
+            <!-- Button -->
+            <a href="/checkoutPage?userId={{request.args.get('userId')}}">
+                <button class="btn btn-primary">Proceed to checkout</button>
+            </a>
+            {% else %}
+            <p>Please add products to the cart.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

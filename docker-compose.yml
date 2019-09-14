@@ -1,0 +1,30 @@
+version: "2.1"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: pg_container
+    volumes:
+       - pgdata:/var/lib/postgresql/data
+
+  hardcover:
+    image: hardcover
+    container_name: hardcover
+    links:
+     - db
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_ENV=${FLASK_ENV}
+    depends_on:
+      - db
+    build: .
+    ports:
+      - 5000:5000
+
+volumes:
+  pgdata: {}
