@@ -1,7 +1,7 @@
-from app.models import *
-from app.models import *
+from app.models import User, Cart, Product
 from flask import flash, redirect, url_for, session
 import hashlib
+from app import db
 
 
 def getAllProducts():
@@ -68,7 +68,7 @@ def getusercartdetails():
 # Removes products from cart when user clicks remove
 def removeProductFromCart(productId):
     kwargs = {'productid': productId}
-    cart = Cart.query.filter_by(**kwargs).first()
+    cart = Cart.query.filter_by(**kwargs).first_or_404()
     if productId is not None:
         db.session.delete(cart)
         db.session.commit()

@@ -5,3 +5,9 @@ __pycache__
 *.pyc
 .env
 logs/
+.pytest_cache
+.coveragerc
+.coverage
+htmlcov
+*.pyc
+.DS_store

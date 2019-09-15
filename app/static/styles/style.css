@@ -1,3 +1,19 @@
 #cartIcon{
     width: 40px;
 }
+body {
+    font: 2em Fontin, serif
+}
+nav {
+    font-size: .7em
+}
+
+@page {
+    size: A3;
+    margin: 1cm
+}
+@media print {
+    nav {
+        display: none
+    }
+}
