@@ -8,14 +8,8 @@ jobs:
       - run:
           name: Install postgres
           command: |
-            sudo apt-get -y update && sudo apt-get install postgresql
-      - run:
-          name: Install dependancies
-          command: |
-            virtualenv venv
-            source venv/bin/activate
-            pip install -r requirements.txt 
-
+            sudo apt-get -y update
+            sudo apt-get install postgresql
   backend_test:
     docker:
       - image: circleci/python:3.7
@@ -24,12 +18,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run tests
+          name: Install dependancies and run tests
           command: |
+            virtualenv venv
+            source venv/bin/activate
+            pip install -r requirements.txt 
             pytest
       - run:
           name: Generate code coverage
-          command: coverage run -m pytest; coverage html
+          command: |
+            coverage run -m pytest
+            coverage html
 
 workflows:
   version: 2
