@@ -18,15 +18,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependancies and run tests
+          name: Install dependancies, run tests and generate code coverage
           command: |
             virtualenv venv
             source venv/bin/activate
             pip install -r requirements.txt 
             pytest
-      - run:
-          name: Generate code coverage
-          command: |
             coverage run -m pytest
             coverage html
 
