@@ -1,5 +1,25 @@
 version: 2
 jobs:
+  backend_build:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip install -r requirements.txt --user
+            /home/circleci/.local/bin/black . --check
+      - run:
+          name: Install postgres
+          command: |
+            sudo apt-get -y update && sudo apt-get install postgresql
+      - run:
+          name: Install dependancies
+          command: |
+            virtualenv venv
+            source venv/bin/activate
+            pip install -r requirements.txt 
+
   backend_test:
     docker:
       - image: circleci/python:3.7
@@ -8,19 +28,21 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install postgres
+          name: Run tests
           command: |
-            sudo apt-get -y update && sudo apt-get install postgresql
-      - run:
-          name: install dependencies and run tests
-          command: |
-            virtualenv venv
-            source venv/bin/activate
-            pip install -r requirements.txt 
             pytest
+      - run:
+          name: Generate code coverage
+          command: coverage run -m pytest; coverage html
+            
 workflows:
   version: 2
-  build-test:
+  build-and-test:
     jobs:
-      - backend_format
-      - backend_test
+      - backend_build
+      - backend_test:
+          requires:
+            - backend_build
+          filters:
+            branches:
+              only: develop
