@@ -1,17 +1,10 @@
 version: 2
 jobs:
-  backend_format:
-    docker:
-      - image: circleci/python:3.7
-    steps:
-      - checkout
-      - run:
-          command: |
-            pip install -r requirements.txt --user
-            /home/circleci/.local/bin/black . --check
   backend_test:
     docker:
       - image: circleci/python:3.7
+    environment:
+      FLASK_SECRET_KEY: faketestkey
     steps:
       - checkout
       - run:
