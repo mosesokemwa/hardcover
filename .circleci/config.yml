@@ -6,10 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          command: |
-            pip install -r requirements.txt --user
-            /home/circleci/.local/bin/black . --check
-      - run:
           name: Install postgres
           command: |
             sudo apt-get -y update && sudo apt-get install postgresql
@@ -34,7 +30,7 @@ jobs:
       - run:
           name: Generate code coverage
           command: coverage run -m pytest; coverage html
-            
+
 workflows:
   version: 2
   build-and-test:
