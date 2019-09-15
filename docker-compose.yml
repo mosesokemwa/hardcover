@@ -1,30 +1,40 @@
-version: "2.1"
-
+version: "3"
+networks:
+  my-postgres:
+    driver: bridge
+  
 services:
-  db:
-    image: postgres
-    restart: always
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+  pg_container:
+    image: postgres:11.1-alpine
     container_name: pg_container
+    networks:
+      - my-postgres
+    ports:
+      - 5432:5432
     volumes:
-       - pgdata:/var/lib/postgresql/data
+      - ./volumes/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   hardcover:
     image: hardcover
     container_name: hardcover
-    links:
-     - db
+    build:
+      context: .
+      dockerfile: .docker/application/Dockerfile
+    depends_on:
+      - pg_container
+    volumes:
+      - .:/app
     environment:
-      - DATABASE_URL=${DATABASE_URL}
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
       - FLASK_ENV=${FLASK_ENV}
-    depends_on:
-      - db
-    build: .
     ports:
       - 5000:5000
-
-volumes:
-  pgdata: {}

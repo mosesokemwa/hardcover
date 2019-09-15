@@ -25,24 +25,33 @@ RUN mkdir /install
 WORKDIR /install
 
 COPY requirements.txt /requirements.txt
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+RUN apk --update --upgrade add gcc postgresql-dev \
+  musl-dev jpeg-dev zlib-dev \
+  libffi-dev cairo-dev pango-dev \
+  gdk-pixbuf-dev postgresql-dev \
+  python3-dev
 RUN pip install --install-option="--prefix=/install" -r /requirements.txt
 
 FROM base
 LABEL Name=hardcover Version=0.0.1
 COPY --from=builder /install /usr/local
 COPY . /app
-# EXPOSE 3000
 RUN apk update && apk upgrade \
-    && apk add --update --no-cache \
-      --virtual .build-deps \
-      libffi-dev build-base jpeg-dev libpng-dev postgresql-dev \
-    && apk add --update --no-cache libffi jpeg postgresql \
-    && apk del --purge .build-deps \
-    && rm -rf /var/cache/apk/*
+  && apk add --update --no-cache \
+  --virtual .build-deps \
+  libffi-dev build-base jpeg-dev libpng-dev postgresql-dev \
+  && apk add --update --no-cache libffi jpeg postgresql \
+  && apk del --purge .build-deps \
+  && rm -rf /var/cache/apk/*
+
+RUN apk --update --upgrade add gcc \
+  musl-dev jpeg-dev zlib-dev \
+  libffi-dev cairo-dev pango-dev \
+  gdk-pixbuf-dev python3-dev
 
 RUN pip install psycopg2-binary
 
 WORKDIR /app
+EXPOSE 5000
 # CMD ["gunicorn", "-w 4", "main:app"]
-CMD ["python3", "-m", "hardcover"]
+CMD ["python3", "manage.py", "runserver"]

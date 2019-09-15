@@ -1,10 +1,18 @@
-version: '2.1'
+version: '3'
 
 services:
   hardcover:
     image: hardcover
+    container_name: hardcover
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: .docker/application/Dockerfile
+    depends_on:
+      - pg_container
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_ENV=${FLASK_ENV}
     ports:
-      - 3000:3000
+      - 5000:5000

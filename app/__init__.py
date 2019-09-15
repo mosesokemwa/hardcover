@@ -8,6 +8,8 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 
 
 # ######## Enable this for debugging #########
@@ -25,6 +27,9 @@ migrate = Migrate(app, db)
 moment = Moment(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+manager = Manager(app)
+migrate = Migrate(app, db)
 
 
 if not os.path.exists('logs'):

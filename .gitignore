@@ -11,3 +11,4 @@ logs/
 htmlcov
 *.pyc
 .DS_store
+volumes/
