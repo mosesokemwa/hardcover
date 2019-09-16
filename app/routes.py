@@ -68,6 +68,7 @@ def register():
                 flash('Congratulations, you are now a registered user!')
                 return redirect(url_for('store'))
             except IntegrityError:
+                flash('Please use a different email address.')
                 db.session.rollback()
     return render_template('register.html',  title='Register', form=form)
 
