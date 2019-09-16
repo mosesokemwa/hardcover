@@ -16,7 +16,7 @@ services:
     container_name: hardcover
     build:
       context: .
-      dockerfile: .docker/application/Dockerfile
+      dockerfile: Dockerfile
     volumes:
       - .:/app
     environment:
