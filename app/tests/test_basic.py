@@ -44,12 +44,6 @@ class BasicTests(unittest.TestCase):
             follow_redirects=True
         )
 
-    # def logout(self):
-    #     return self.app.get(
-    #         '/logout',
-    #         follow_redirects=True
-    #     )
-
     def authenticated_user(self):
         self.register('okemwamoses@gmail.com',
                       'FlaskIsAwesome', 'FlaskIsAwesome')

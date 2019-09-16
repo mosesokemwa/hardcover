@@ -10,12 +10,6 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class UsersTests(unittest.TestCase):
-
-    ############################
-    #### setup and teardown ####
-    ############################
-
-    # executed prior to each test
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
@@ -27,8 +21,6 @@ class UsersTests(unittest.TestCase):
         db.drop_all()
         db.create_all()
 
-        # Disable sending emails during unit testing
-        # mail.init_app(app)
         self.assertEqual(app.debug, False)
 
     # executed after each test
@@ -56,10 +48,6 @@ class UsersTests(unittest.TestCase):
             follow_redirects=True
         )
 
-###############
-#### tests ####
-###############
-
     def test_user_registration_form_displays(self):
         response = self.app.get('/register')
         self.assertEqual(response.status_code, 200)
@@ -71,16 +59,6 @@ class UsersTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(
             b'Congratulations, you are now a registered user!', response.data)
-
-    ##
-    ## needs refacoring, not sure why its failing but it has to do with how the registration page displays errors
-    ##
-    
-    # def test_invalid_user_registration_different_passwords(self):
-    #     response = self.register('okemwamoses@gmail.com',
-    #                              'FlaskIsAwesome', 'FlaskIsNotAwesome.')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertIn(b'Field must be equal to password.', response.data)
 
     def test_missing_field_user_registration_error(self):
         self.app.get('/register', follow_redirects=True)
