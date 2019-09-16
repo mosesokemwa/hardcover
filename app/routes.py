@@ -14,11 +14,11 @@ from flask_weasyprint import HTML, render_pdf
 def index():
     posts = [
         {
-            'author': {'username': 'John'},
+            'author': {'username': 'moses'},
             'body': 'Beautiful day in Portland!'
         },
         {
-            'author': {'username': 'Susan'},
+            'author': {'username': 'Me '},
             'body': 'The Avengers movie was so cool!'
         }
     ]
@@ -28,7 +28,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('store'))
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -39,7 +39,7 @@ def login():
                 flash('Thanks for logging in, {}'.format(current_user.email))
                 next_page = request.args.get('next')
                 if not next_page or url_parse(next_page).netloc != '':
-                    next_page = url_for('index')
+                    next_page = url_for('store')
                 return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
@@ -47,11 +47,13 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('store'))
     form = RegistrationForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -119,10 +121,3 @@ def pdf():
     html = render_template("pdf.html", cartData=cartdetails, totalsum=totalsum, tax=tax)
     return render_pdf(HTML(string=html))
 
-
-@app.route("/productDescription")
-@login_required
-def productDescription():
-    productid = request.args.get('productId')
-    productDetailsByProductId = getProductDetails(productid)
-    return render_template("productDescription.html", data=productDetailsByProductId)

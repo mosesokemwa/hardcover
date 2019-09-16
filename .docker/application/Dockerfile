@@ -50,6 +50,7 @@ RUN apk --update --upgrade add gcc \
   gdk-pixbuf-dev python3-dev
 
 RUN pip install psycopg2-binary
+RUN flask db upgrade
 
 WORKDIR /app
 EXPOSE 5000

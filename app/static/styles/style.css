@@ -2,10 +2,11 @@
     width: 40px;
 }
 body {
-    font: 2em Fontin, serif
+    font-size: 2em;
+    font-family: 'Courier New', Courier, monospace;
 }
 nav {
-    font-size: .7em
+    font-size: .7em;
 }
 
 @page {

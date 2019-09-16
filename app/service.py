@@ -22,15 +22,6 @@ def massageItemData(data):
         ans.append(curr)
     return ans
 
-
-def getProductDetails(productId):
-    productDetailsById = Product.query.filter(
-        Product.productid == productId).first()
-    return productDetailsById
-
-# Using Flask-SQL Alchemy SubQuery
-
-
 def extractAndPersistKartDetailsUsingSubquery(productId, quantity):
     userId = session['user_id']
 
@@ -47,7 +38,6 @@ def extractAndPersistKartDetailsUsingSubquery(productId, quantity):
     db.session.commit()
 
 
-# Gets products in the cart
 def getusercartdetails():
     # userId = User.query.with_entities(User.userid).filter(User.email == session['email']).first()
 
