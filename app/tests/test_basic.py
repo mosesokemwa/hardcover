@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from app import app, models, db
+from app import application as app, models, db
 
 
 TEST_DB = 'test.db'
