@@ -19,17 +19,17 @@ from flask_migrate import Migrate, MigrateCommand
 # SQLALCHEMY_TRACK_MODIFICATIONS = True
 # ####### Enable this for debugging #########
 
-app = Flask(__name__)
-app.config.from_object(Config)
+application = Flask(__name__)
+application.config.from_object(Config)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-moment = Moment(app)
-login_manager = LoginManager(app)
+db = SQLAlchemy(application)
+migrate = Migrate(application, db)
+moment = Moment(application)
+login_manager = LoginManager(application)
 login_manager.login_view = 'login'
 
-manager = Manager(app)
-migrate = Migrate(app, db)
+manager = Manager(application)
+migrate = Migrate(application, db)
 
 
 if not os.path.exists('logs'):
@@ -41,9 +41,9 @@ if not os.path.exists('logs'):
         '[in %(pathname)s:%(lineno)d]')
     )
     file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
+    application.logger.addHandler(file_handler)
 
-    app.logger.setLevel(logging.INFO)
-    app.logger.info('Hardcover startup')
+    application.logger.setLevel(logging.INFO)
+    application.logger.info('Hardcover startup')
 
 from app import models, routes

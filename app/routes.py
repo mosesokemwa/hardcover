@@ -2,14 +2,14 @@ from app.models import User
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
-from app import app, db
+from app import application, db
 from app.forms import LoginForm, RegistrationForm
 from app.service import getAllProducts, massageItemData, extractAndPersistKartDetailsUsingSubquery, getusercartdetails, removeProductFromCart
 from flask_weasyprint import HTML, render_pdf
 
 
-@app.route('/')
-@app.route('/index')
+@application.route('/')
+@application.route('/index')
 @login_required
 def index():
     posts = [
@@ -25,7 +25,7 @@ def index():
     return render_template('index.html', title='Home', posts=posts)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('store'))
@@ -44,16 +44,14 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-@app.route('/logout')
+@application.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@application.route('/register', methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('store'))
     form = RegistrationForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -73,7 +71,7 @@ def register():
     return render_template('register.html',  title='Register', form=form)
 
 
-@app.route("/store")
+@application.route("/store")
 @login_required
 def store():
     # loggedIn, firstName, productCountinKartForGivenUser = getLoginUserDetails()
@@ -83,7 +81,7 @@ def store():
     return render_template('home.html', itemData=allProductsMassagedDetails)
 
 
-@app.route("/addToCart", methods=['GET', 'POST'])
+@application.route("/addToCart", methods=['GET', 'POST'])
 @login_required
 def addToCart():
     productId = int(request.args.get('productId'))
@@ -99,7 +97,7 @@ def addToCart():
     return redirect(url_for('store'))
 
 
-@app.route("/removeFromCart", methods=['GET', 'POST'])
+@application.route("/removeFromCart", methods=['GET', 'POST'])
 @login_required
 def deletecItemFromCart():
     productId = int(request.args.get('productId'))
@@ -107,7 +105,7 @@ def deletecItemFromCart():
     return redirect(url_for('cart'))
 
 
-@app.route("/cart")
+@application.route("/cart")
 @login_required
 def cart():
     cartdetails, totalsum, tax = getusercartdetails()
@@ -115,7 +113,7 @@ def cart():
                            totalsum=totalsum, tax=tax)
 
 
-@app.route("/pdf")
+@application.route("/pdf")
 @login_required
 def pdf():
     cartdetails, totalsum, tax = getusercartdetails()
