@@ -16,3 +16,13 @@ services:
       - FLASK_ENV=${FLASK_ENV}
     ports:
       - 5000:5000
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+
+volumes:
+  volume: {}

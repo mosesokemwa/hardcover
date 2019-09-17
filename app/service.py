@@ -44,15 +44,23 @@ def getusercartdetails():
     productsincart = Product.query.join(Cart, Product.productid == Cart.productid) \
         .add_columns(Product.productid, Product.product_name, Cart.quantity) \
         .filter(Cart.productid == Product.productid)
+    
     totalsum = 0
-
     for row in productsincart:
-        totalsum += row[3]
+        regular_price = row[3]
+        category = row[4]
+        manual_sum = category * regular_price
+        totalsum += manual_sum
 
-    tax = ("%.2f" % (.06 * float(totalsum)))
+    rental_days = 0
+    for row in productsincart:
+        rental_days = 0
+    
 
-    totalsum = float("%.2f" % (1.06 * float(totalsum)))
-    return (productsincart, totalsum, tax)
+    # tax = ("%.2f" % (.06 * float(totalsum)))
+
+    totalsum = float("%.2f" % (1.06 * float(regular_price)))
+    return (productsincart, totalsum)
 
 
 # Removes products from cart when user clicks remove

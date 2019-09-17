@@ -28,4 +28,4 @@ services:
       - pg_container
 
 volumes:
-  volumes:
+  volumes: {}
