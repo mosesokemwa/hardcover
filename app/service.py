@@ -47,20 +47,13 @@ def getusercartdetails():
     
     totalsum = 0
     for row in productsincart:
-        regular_price = row[3]
-        category = row[4]
-        manual_sum = category * regular_price
-        totalsum += manual_sum
+        totalsum += row[3]
 
-    rental_days = 0
-    for row in productsincart:
-        rental_days = 0
-    
 
-    # tax = ("%.2f" % (.06 * float(totalsum)))
+    tax = ("%.2f" % (.06 * float(totalsum)))
 
-    totalsum = float("%.2f" % (1.06 * float(regular_price)))
-    return (productsincart, totalsum)
+    totalsum = float("%.2f" % (1.06 * float(totalsum)))
+    return (productsincart, totalsum, tax)
 
 
 # Removes products from cart when user clicks remove
