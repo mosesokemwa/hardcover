@@ -30,6 +30,10 @@ RUN apk --update --upgrade add gcc postgresql-dev \
   libffi-dev cairo-dev pango-dev \
   gdk-pixbuf-dev postgresql-dev \
   python3-dev
+RUN apk --update --upgrade add gcc \
+  musl-dev jpeg-dev zlib-dev \
+  libffi-dev cairo-dev pango-dev \
+  gdk-pixbuf-dev python3-dev
 RUN pip install --install-option="--prefix=/install" -r /requirements.txt
 
 FROM base
@@ -53,4 +57,5 @@ RUN pip install psycopg2-binary
 
 WORKDIR /app
 EXPOSE 5000
-CMD ["python3" "manage.py" "run -h 0.0.0.0"]
+CMD ["flask" "run" "-h 0.0.0.0"]
+
