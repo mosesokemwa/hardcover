@@ -35,9 +35,7 @@ RUN apk --update --upgrade add gcc \
   gdk-pixbuf-dev python3-dev
 
 # create virtual environment
-RUN \
-  pip3 install --upgrade virtualenv && \
-  virtualenv -p /usr/bin/python3.6 /root/.virtualenvs
+RUN virtualenv -p /usr/bin/python3.6 /root/.virtualenvs
 
 COPY ./requirements.txt /var/www/hardcover/requirements.txt
 ENV PATH=/home/ubuntu/.virtualenvs/bin:$PATH
