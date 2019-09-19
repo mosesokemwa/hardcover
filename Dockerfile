@@ -24,7 +24,6 @@ FROM base as builder
 RUN mkdir /install
 WORKDIR /install
 
-COPY ./requirements.txt /var/www/hardcover/requirements.txt
 RUN apk --update --upgrade add gcc postgresql-dev \
   musl-dev jpeg-dev zlib-dev \
   libffi-dev cairo-dev pango-dev \
@@ -34,7 +33,16 @@ RUN apk --update --upgrade add gcc \
   musl-dev jpeg-dev zlib-dev \
   libffi-dev cairo-dev pango-dev \
   gdk-pixbuf-dev python3-dev
-RUN pip install --install-option="--prefix=/install" -r /var/www/hardcover/requirements.txt
+
+# create virtual environment
+RUN \
+  pip2 install --upgrade pip && \
+  pip install --upgrade virtualenv && \
+  virtualenv -p /usr/bin/python3.6 /root/.virtualenvs
+
+COPY ./requirements.txt /var/www/hardcover/requirements.txt
+ENV PATH=/home/ubuntu/.virtualenvs/bin:$PATH
+RUN pip install -r /var/www/hardcover/requirements.txt
 
 FROM base
 LABEL Name=hardcover Version=0.0.1
@@ -57,5 +65,5 @@ RUN pip install psycopg2-binary
 
 WORKDIR /app
 EXPOSE 5000
-CMD ["flask" "run" "-h 0.0.0.0"]
+CMD ["python3", "-m", "hardcover" "-h 0.0.0.0"]
 
