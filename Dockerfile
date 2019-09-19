@@ -24,7 +24,7 @@ FROM base as builder
 RUN mkdir /install
 WORKDIR /install
 
-COPY requirements.txt /requirements.txt
+COPY ./requirements.txt /var/www/hardcover/requirements.txt
 RUN apk --update --upgrade add gcc postgresql-dev \
   musl-dev jpeg-dev zlib-dev \
   libffi-dev cairo-dev pango-dev \
@@ -34,7 +34,7 @@ RUN apk --update --upgrade add gcc \
   musl-dev jpeg-dev zlib-dev \
   libffi-dev cairo-dev pango-dev \
   gdk-pixbuf-dev python3-dev
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
+RUN pip install --install-option="--prefix=/install" -r /var/www/hardcover/requirements.txt
 
 FROM base
 LABEL Name=hardcover Version=0.0.1
