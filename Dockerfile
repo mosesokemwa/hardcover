@@ -36,7 +36,7 @@ RUN apk --update --upgrade add gcc \
 
 # create virtual environment
 RUN \
-  pip2 install --upgrade pip && \
+  pip install --upgrade pip && \
   pip install --upgrade virtualenv && \
   virtualenv -p /usr/bin/python3.6 /root/.virtualenvs
 
