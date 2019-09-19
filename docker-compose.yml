@@ -19,7 +19,7 @@ services:
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
       - FLASK_ENV=${FLASK_ENV}
     ports:
-      - 5000:5000
+      - 5000:80
     depends_on:
       - pg_container
 
