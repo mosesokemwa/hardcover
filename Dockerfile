@@ -36,8 +36,7 @@ RUN apk --update --upgrade add gcc \
 
 # create virtual environment
 RUN \
-  pip install --upgrade pip && \
-  pip install --upgrade virtualenv && \
+  pip3 install --upgrade virtualenv && \
   virtualenv -p /usr/bin/python3.6 /root/.virtualenvs
 
 COPY ./requirements.txt /var/www/hardcover/requirements.txt
