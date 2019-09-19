@@ -1,8 +1,4 @@
 version: "3"
-networks:
-  my-postgres:
-    driver: bridge
-  
 services:
   pg_container:
     image: postgres:11.1-alpine

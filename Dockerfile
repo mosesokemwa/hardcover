@@ -53,5 +53,4 @@ RUN pip install psycopg2-binary
 
 WORKDIR /app
 EXPOSE 5000
-# run the command to start uWSGI
-CMD ["flask", "run"]
+CMD ["python3" "manage.py" "run -h 0.0.0.0"]
