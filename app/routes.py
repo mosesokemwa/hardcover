@@ -113,10 +113,10 @@ def cart():
                            totalsum=totalsum, tax=tax)
 
 
-# @application.route("/pdf")
-# @login_required
-# def pdf():
-#     cartdetails, totalsum, tax = getusercartdetails()
-#     html = render_template("pdf.html", cartData=cartdetails, totalsum=totalsum, tax=tax)
-#     return render_pdf(HTML(string=html))
+@application.route("/pdf")
+@login_required
+def pdf():
+    cartdetails, totalsum, tax = getusercartdetails()
+    html = render_template("pdf.html", cartData=cartdetails, totalsum=totalsum, tax=tax)
+    return render_pdf(HTML(string=html))
 
