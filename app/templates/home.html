@@ -23,15 +23,14 @@
 							<tr id="productName">
 								<td>
 									{{row.product_name}}
+									
 								</td>
 								<td>
 									{{row.description}}
 								</td>
 								<td>
 									<form class="form-inline my-2 my-lg-0">
-										<!-- <input class="form-control" id="qta_field" type="number" placeholder="1" aria-label="days"> -->
-										<input type="number" id="qta_field" value="1"/>
-
+										<input type="number" id="qta_field{{ loop.index }}"/>
 									</form>
 								</td>
 								<td>
@@ -39,8 +38,7 @@
 								</td>
 								<td>
 										<div id="addToCart">
-												<!-- <a href="/addToCart?productId={{row.productid}}&quantity="+document.getElementById('qta_field').value">Add to Cart</a> -->
-												<a href='' onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field').value">Add to Cart</a>
+												<a href='' onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field{{ loop.index }}').value">Add to Cart</a>
 											</div>
 								</td>
 							</tr>

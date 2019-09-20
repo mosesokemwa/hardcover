@@ -27,6 +27,7 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
+    FLASK_ENV = "development"
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres@localhost/hardcover'
 
 

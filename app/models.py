@@ -33,9 +33,10 @@ class Product(db.Model):
     description = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     regular_price = db.Column(db.DECIMAL)
+    category = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
-        return f"Product('{self.productid}','{self.product_name}','{self.description}', '{self.image}',  '{self.quantity}', '{self.regular_price}')"
+        return f"Product('{self.productid}','{self.product_name}','{self.description}', '{self.image}',  '{self.quantity}', '{self.regular_price}', '{self.category}')"
 
 
 class Cart(db.Model):

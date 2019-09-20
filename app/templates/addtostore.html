@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.product_name.label }}<br>
+			{{ form.product_name(size=32) }}<br>
+			{% for error in form.product_name.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.sku.label }}<br>
+			{{ form.sku(size=32) }}<br>
+			{% for error in form.sku.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.description.label }}<br>
+			{{ form.description(size=32) }}<br>
+			{% for error in form.description.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.quantity.label }}<br>
+			{{ form.quantity(size=32) }}<br>
+			{% for error in form.quantity.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.regular_price.label }}<br>
+			{{ form.regular_price(size=32) }}<br>
+			{% for error in form.regular_price.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.category.label }}<br>
+			{{ form.category(size=32) }}<br>
+			{% for error in form.category.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>{{ form.submit() }}</p>
+	</form>
+	<p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+</div>
+
+{% endblock %}
