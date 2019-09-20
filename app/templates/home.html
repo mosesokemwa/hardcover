@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="display">
+				<div>
+					<h2>Items</h2>
+					{% for data in itemData %}
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Title</th>
+								<th scope="col">Description</th>
+								<th scope="col">Rental Days</th>
+								<th scope="col">Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for row in data %}
+							<tr id="productName">
+								<td>
+									{{row.product_name}}
+								</td>
+								<td>
+									{{row.description}}
+								</td>
+								<td>
+									<form class="form-inline my-2 my-lg-0">
+										<!-- <input class="form-control" id="qta_field" type="number" placeholder="1" aria-label="days"> -->
+										<input type="number" id="qta_field" value="1"/>
+
+									</form>
+								</td>
+								<td>
+									$ {{row.regular_price}}
+								</td>
+								<td>
+										<div id="addToCart">
+												<!-- <a href="/addToCart?productId={{row.productid}}&quantity="+document.getElementById('qta_field').value">Add to Cart</a> -->
+												<a href='' onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field').value">Add to Cart</a>
+											</div>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

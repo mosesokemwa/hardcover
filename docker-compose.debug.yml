@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  hardcover:
+    image: hardcover
+    container_name: hardcover
+    build:
+      context: .
+      dockerfile: .docker/application/Dockerfile
+    depends_on:
+      - pg_container
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - FLASK_ENV=${FLASK_ENV}
+    ports:
+      - 5000:5000
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+
+volumes:
+  volume: {}

@@ -1,0 +1,20 @@
+#cartIcon{
+    width: 40px;
+}
+body {
+    font-size: 2em;
+    font-family: 'Courier New', Courier, monospace;
+}
+nav {
+    font-size: .7em;
+}
+
+@page {
+    size: A3;
+    margin: 1cm
+}
+@media print {
+    nav {
+        display: none
+    }
+}

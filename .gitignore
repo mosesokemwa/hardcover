@@ -1,0 +1,16 @@
+venv
+instance/envvar.py
+.vscode
+__pycache__
+*.pyc
+.env
+logs/
+.pytest_cache
+.coveragerc
+.coverage
+htmlcov
+*.pyc
+.DS_store
+volumes/
+test.db
+test.db
