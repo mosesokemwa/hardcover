@@ -52,7 +52,7 @@ def getusercartdetails():
     
     totalsum = 0
     for row in productsincart:
-        totalsum += (row[2] * row[3])
+        totalsum += (row[3] * row[4])
     return (productsincart, totalsum)
 
 
