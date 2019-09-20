@@ -44,8 +44,6 @@ def extractAndPersistKartDetailsUsingSubquery(productId, quantity):
 
 
 def getusercartdetails():
-    # userId = User.query.with_entities(User.userid).filter(User.email == session['email']).first()
-
     productsincart = Product.query.join(Cart, Product.productid == Cart.productid) \
         .add_columns(Product.productid, Product.product_name, Product.regular_price, Cart.quantity) \
         .filter(Cart.productid == Product.productid)
@@ -56,13 +54,6 @@ def getusercartdetails():
     return (productsincart, totalsum)
 
 
-# There are three kinds of books: 
-# regular, fiction, and novels. 
-# Regular Rs. 1.5.
-# Fiction Rs. 3.
-# Novels Rs. 1.5.
-
-# Removes products from cart when user clicks remove
 def removeProductFromCart(productId):
     kwargs = {'productid': productId}
     cart = Cart.query.filter_by(**kwargs).first_or_404()
