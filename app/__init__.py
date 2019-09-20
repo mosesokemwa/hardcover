@@ -2,7 +2,8 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask import Flask
-from config import Config
+from config import ProductionConfig, TestingConfig, StagingConfig, DevelopmentConfig
+from werkzeug.utils import import_string
 
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
@@ -20,7 +21,8 @@ from flask_migrate import Migrate, MigrateCommand
 # ####### Enable this for debugging #########
 
 application = Flask(__name__)
-application.config.from_object(Config)
+mode = import_string(os.environ["APPLICATION_MODE"])
+application.config.from_object(mode)
 
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
