@@ -77,6 +77,7 @@ class BasicTests(unittest.TestCase):
         self.authenticated_user()
         response = self.app.post('/addToCart',
                                  query_string={
+                                     "userid": "1",
                                      "productId": '1',
                                      'quantity': '3'
                                  },

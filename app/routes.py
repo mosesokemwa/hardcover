@@ -105,9 +105,9 @@ def deletecItemFromCart():
 @application.route("/cart")
 @login_required
 def cart():
-    cartdetails, totalsum, tax = getusercartdetails()
+    cartdetails, totalsum = getusercartdetails()
     return render_template("cart.html", cartData=cartdetails,
-                           totalsum=totalsum, tax=tax)
+                           totalsum=totalsum)
 
 
 @application.route("/pdf")

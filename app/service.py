@@ -50,10 +50,9 @@ def getusercartdetails():
         .add_columns(Product.productid, Product.product_name, Product.regular_price, Cart.quantity) \
         .filter(Cart.productid == Product.productid)
     
-    totalsum = productsincart[3] * productsincart[4])
-
-
-    totalsum = float("%.2f" % (1.06 * float(totalsum)))
+    totalsum = 0
+    for row in productsincart:
+        totalsum += (row[2] * row[3])
     return (productsincart, totalsum)
 
 
