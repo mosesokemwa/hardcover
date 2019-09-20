@@ -5,7 +5,7 @@ from werkzeug.urls import url_parse
 from app import application, db
 from app.forms import LoginForm, RegistrationForm
 from app.service import getAllProducts, massageItemData, extractAndPersistKartDetailsUsingSubquery, getusercartdetails, removeProductFromCart
-# from flask_weasyprint import HTML, render_pdf
+from flask_weasyprint import HTML, render_pdf
 
 
 @application.route('/')
