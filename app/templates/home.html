@@ -24,7 +24,11 @@
 							<tr id="productName">
 								<td>
 									{{row.product_name}}
+<<<<<<< HEAD
 
+=======
+									
+>>>>>>> 3a47d2b2b16fd7ac0c80a70b115ef66b34665a8d
 								</td>
 								<td>
 									{{row.description}}
@@ -34,18 +38,28 @@
 								</td>
 								<td>
 									<form class="form-inline my-2 my-lg-0">
+<<<<<<< HEAD
 										<input type="number" id="qta_field{{ loop.index }}" />
+=======
+										<input type="number" id="qta_field{{ loop.index }}"/>
+>>>>>>> 3a47d2b2b16fd7ac0c80a70b115ef66b34665a8d
 									</form>
 								</td>
 								<td>
 									$ {{row.regular_price}}
 								</td>
 								<td>
+<<<<<<< HEAD
 									<div id="addToCart">
 										<a href=''
 											onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field{{ loop.index }}').value">Add
 											to Cart</a>
 									</div>
+=======
+										<div id="addToCart">
+												<a href='' onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field{{ loop.index }}').value">Add to Cart</a>
+											</div>
+>>>>>>> 3a47d2b2b16fd7ac0c80a70b115ef66b34665a8d
 								</td>
 							</tr>
 							{% endfor %}
