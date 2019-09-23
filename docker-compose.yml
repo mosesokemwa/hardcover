@@ -18,6 +18,7 @@ services:
     environment:
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
       - FLASK_ENV=${FLASK_ENV}
+      - APPLICATION_MODE=${APPLICATION_MODE}
     command: bash start.sh
     expose:
       - 5000

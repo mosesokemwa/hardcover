@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# APPLICATION_MODE=config.ProductionConfig
-APPLICATION_MODE=config.DevelopmentConfig
+APPLICATION_MODE=config.ProductionConfig
 flask db upgrade
-gunicorn hardcover:application
+gunicorn -b 0.0.0.0:5000 hardcover:application
