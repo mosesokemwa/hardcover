@@ -14,20 +14,16 @@
             {% for row in cartData %}
             <tr>
                 <th scope="row">{{row[2]}}</th>
-                <td>$1</td>
                 <td>{{row[3]}}</td>
-                <td>${{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>${{row[3] * row[4]}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <div class="row">
         <div class="col-md-3">
-            Shipping & handling :$ 0.00
-            <br>
-            Taxes(6% on grand total): {{tax}}
-            <br>
-            Grand Total: $ {{totalsum}}
+            Grand Total: $ <strong><u>{{totalsum}}</u></strong>
         </div>
     </div>
 </div>

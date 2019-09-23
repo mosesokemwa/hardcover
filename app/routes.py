@@ -1,9 +1,9 @@
-from app.models import User
+from app.models import User, Product
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import application, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, ProductAddingForm
 from app.service import getAllProducts, massageItemData, extractAndPersistKartDetailsUsingSubquery, getusercartdetails, removeProductFromCart
 from flask_weasyprint import HTML, render_pdf
 
@@ -85,13 +85,10 @@ def store():
 @login_required
 def addToCart():
     productId = int(request.args.get('productId'))
-    quantity = int(request.args.get('quantity'))
+    quantity = float(request.args.get('quantity'))
 
-    # Using Flask-SQLAlchmy SubQuery
     msg = extractAndPersistKartDetailsUsingSubquery(productId, quantity)
 
-    # Using Flask-SQLAlchmy normal query
-    # extractAndPersistKartDetailsUsingkwargs(productId)
     flash('Item successfully added to cart !!', 'success')
     flash(msg)
     return redirect(url_for('store'))
@@ -108,15 +105,36 @@ def deletecItemFromCart():
 @application.route("/cart")
 @login_required
 def cart():
-    cartdetails, totalsum, tax = getusercartdetails()
+    cartdetails, totalsum = getusercartdetails()
     return render_template("cart.html", cartData=cartdetails,
-                           totalsum=totalsum, tax=tax)
+                           totalsum=totalsum)
 
 
 @application.route("/pdf")
 @login_required
 def pdf():
     cartdetails, totalsum, tax = getusercartdetails()
-    html = render_template("pdf.html", cartData=cartdetails, totalsum=totalsum, tax=tax)
+    html = render_template(
+        "pdf.html", cartData=cartdetails, totalsum=totalsum, tax=tax)
     return render_pdf(HTML(string=html))
 
+
+@application.route("/add", methods=['GET', 'POST'])
+@login_required
+def addProduct():
+    form = ProductAddingForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            product = Product(
+                sku=form.sku.data,
+                product_name=form.product_name.data,
+                description=form.description.data,
+                quantity=form.quantity.data,
+                regular_price=form.regular_price.data,
+                category=form.category.data,
+            )
+            db.session.add(product)
+            db.session.commit()
+            flash('Product {} saved!'.format(form.product_name.data))
+            return redirect(url_for('store'))
+    return render_template('addtostore.html',  title='Add Product to Store', form=form)
