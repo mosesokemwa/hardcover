@@ -14,6 +14,7 @@
 							<tr>
 								<th scope="col">Title</th>
 								<th scope="col">Description</th>
+								<th scope="col">Category</th>
 								<th scope="col">Rental Days</th>
 								<th scope="col">Price</th>
 							</tr>
@@ -23,23 +24,28 @@
 							<tr id="productName">
 								<td>
 									{{row.product_name}}
-									
+
 								</td>
 								<td>
 									{{row.description}}
 								</td>
 								<td>
+									{{row.category}}
+								</td>
+								<td>
 									<form class="form-inline my-2 my-lg-0">
-										<input type="number" id="qta_field{{ loop.index }}"/>
+										<input type="number" id="qta_field{{ loop.index }}" />
 									</form>
 								</td>
 								<td>
 									$ {{row.regular_price}}
 								</td>
 								<td>
-										<div id="addToCart">
-												<a href='' onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field{{ loop.index }}').value">Add to Cart</a>
-											</div>
+									<div id="addToCart">
+										<a href=''
+											onclick="this.href='/addToCart?productId={{row.productid}}&quantity='+document.getElementById('qta_field{{ loop.index }}').value">Add
+											to Cart</a>
+									</div>
 								</td>
 							</tr>
 							{% endfor %}
