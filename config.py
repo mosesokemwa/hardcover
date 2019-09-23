@@ -15,14 +15,7 @@ class Config(object):
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-
-
-class StagingConfig(Config):
-    DEVELOPMENT = True
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
-        os.path.join(PROJECT_DIR, 'app.db')
-
+    FLASK_ENV = os.environ["FLASK_ENV"]
 
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
