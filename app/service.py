@@ -79,11 +79,11 @@ def calculate_based_on_category(category, days):
     Novel minimum charges are introduced as 4.5 Rs if days rented is less than 3 days.
     """
     if category == regular:
-        if days >= 2:
-            inital = 2 * 1
-            after = days - 2 * 1.5
-            pricing = inital + after
+        if days > 2:
+            pricing = (2 * 1) + ((days - 2) * 1.5)
             return pricing
+        elif days <= 2:
+            return days * 2
     elif category == novels:
         if days <= 3:
             return 4.5 * days
