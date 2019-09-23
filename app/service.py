@@ -26,6 +26,7 @@ def massageItemData(data):
         ans.append(curr)
     return ans
 
+
 def extractAndPersistKartDetailsUsingSubquery(productId, quantity):
     number_of_items = quantity
     userId = session['user_id']
@@ -34,24 +35,15 @@ def extractAndPersistKartDetailsUsingSubquery(productId, quantity):
     qry = db.session.query(Cart.quantity).select_entity_from(subqury).all()
 
     if len(qry) == 0:
-        cart = Cart(userid=userId, productid=productId, quantity=number_of_items)
+        cart = Cart(userid=userId, productid=productId,
+                    quantity=number_of_items)
     else:
-        cart = Cart(userid=userId, productid=productId, quantity=(qry[0][0] + number_of_items))
+        cart = Cart(userid=userId, productid=productId,
+                    quantity=(qry[0][0] + number_of_items))
 
     db.session.merge(cart)
     db.session.flush()
     db.session.commit()
-
-
-def getusercartdetails():
-    productsincart = Product.query.join(Cart, Product.productid == Cart.productid) \
-        .add_columns(Product.productid, Product.product_name, Product.regular_price, Cart.quantity) \
-        .filter(Cart.productid == Product.productid)
-    
-    totalsum = 0
-    for row in productsincart:
-        totalsum += (row[3] * row[4])
-    return (productsincart, totalsum)
 
 
 def removeProductFromCart(productId):
@@ -79,4 +71,40 @@ def extractAndPersistUserDataFromForm(request):
     db.session.commit()
     return "Registered Successfully"
 
+
+def calculate_based_on_category(category, days):
+    """
+    Regular books:
+    - First 2 days = Rs 1 per day and 1.5 Rs there after. Minimum changes will be considered as Rs 2 if days rented is less than 2 days. 
+    Novel minimum charges are introduced as 4.5 Rs if days rented is less than 3 days.
+    """
+    if category == regular:
+        if days > 2:
+            pricing = (2 * 1) + ((days - 2) * 1.5)
+            return pricing
+        elif days <= 2:
+            return days * 2
+    elif category == novels:
+        if days <= 3:
+            return 4.5 * days
+        else:
+            return days * 1.5
+    elif category == fiction:
+        return days * 3
+
+
+def getusercartdetails():
+    productsincart = Product.query.join(Cart, Product.productid == Cart.productid) \
+        .add_columns(Product.productid, Product.product_name, Product.regular_price, Cart.quantity, Product.category) \
+        .filter(Cart.productid == Product.productid)
+    
+    product_pricing = []
+    totalsum = 0
+    for row in productsincart:
+        # returns category item prices
+        product_pricing.append(calculate_based_on_category(row[5], row[4]))
+
+        # returns cart items prices
+        totalsum +=calculate_based_on_category(row[5], row[4])
+    return (productsincart, totalsum, product_pricing)
 

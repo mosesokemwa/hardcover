@@ -105,17 +105,17 @@ def deletecItemFromCart():
 @application.route("/cart")
 @login_required
 def cart():
-    cartdetails, totalsum = getusercartdetails()
+    cartdetails, totalsum, product_pricing = getusercartdetails()
     return render_template("cart.html", cartData=cartdetails,
-                           totalsum=totalsum)
+                           totalsum=totalsum, product_pricing=product_pricing)
 
 
 @application.route("/pdf")
 @login_required
 def pdf():
-    cartdetails, totalsum, tax = getusercartdetails()
+    cartdetails, totalsum, product_pricing = getusercartdetails()
     html = render_template(
-        "pdf.html", cartData=cartdetails, totalsum=totalsum, tax=tax)
+        "pdf.html", cartData=cartdetails, totalsum=totalsum, product_pricing=product_pricing)
     return render_pdf(HTML(string=html))
 
 

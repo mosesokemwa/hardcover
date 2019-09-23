@@ -88,7 +88,3 @@ class UsersTests(unittest.TestCase):
         self.app.get('/login', follow_redirects=True)
         response = self.login('okemwamoses@gmail.com', 'FlaskIsAwesome')
         self.assertIn(b'okemwamoses@gmail.com', response.data)
-
-
-if __name__ == "__main__":
-    unittest.main()
