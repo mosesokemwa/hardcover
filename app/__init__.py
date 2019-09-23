@@ -2,7 +2,7 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 from flask import Flask
-from config import ProductionConfig, TestingConfig, StagingConfig, DevelopmentConfig
+from config import ProductionConfig, TestingConfig, DevelopmentConfig
 from werkzeug.utils import import_string
 
 from flask_moment import Moment
