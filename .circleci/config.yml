@@ -23,9 +23,6 @@ jobs:
             virtualenv venv
             source venv/bin/activate
             pip install -r requirements.txt
-            export APPLICATION_MODE=config.ProductionConfig
-            export FLASK_ENV=production
-            export FLASK_SECRET_KEY=pnhj5aw&
             pytest
             coverage run -m pytest
             coverage html
