@@ -1,0 +1,30 @@
+version = 1
+
+test_patterns = [
+  'coverage run -m pytest'
+]
+
+exclude_patterns = [
+  'venv',
+  'instance/envvar.py',
+  '.vscode',
+  '__pycache__',
+  '*.pyc',
+  '.env',
+  'logs/',
+  '.pytest_cache',
+  '.coveragerc',
+  '.coverage',
+  'htmlcov',
+  '*.pyc',
+  'migrations',
+  'volumes/',
+  'test.db',
+  'test.db'
+]
+
+[[analyzers]]
+name = 'python'
+enabled = true
+runtime_version = '3.x.x'
+
